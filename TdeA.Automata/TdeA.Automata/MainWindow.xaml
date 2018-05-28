@@ -1,0 +1,51 @@
+﻿<Window x:Class="TdeA.Automata.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TdeA.Automata"
+        mc:Ignorable="d"
+        Title="TdeA AFND-AFD" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock  Text="Implementar un programa que permita convertir un autómata finito no determinístico (AFND) en
+autómata finito determinístico(AFD)." Grid.Column="0" TextWrapping="Wrap"/>
+        <TextBlock  Text="1. Se le pide al usuario que introduzca el autómata finito no determinístico la aplicación debe
+validar si el autómata que el usuario ingreso es no determinístico." Grid.Column="1" TextWrapping="Wrap"/>
+        <TextBlock  Text="
+2. Una vez validado se debe convertir el autómata finito no determinístico en determinístico y
+luego mostrar en forma gráfica (pintarlo) el autómata finito determinístico." Grid.Column="2" TextWrapping="Wrap"/>
+
+        <Grid Grid.Row="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/> 
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Cantidad de estados:" Grid.Row="0" VerticalAlignment="Center"></TextBlock>
+            <TextBox Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center"  PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+ 
+            <DataGrid  Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Values}" AutoGenerateColumns="False"   >
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Name}" Header="Estado" />
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Name}" Header="0" />
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Name}" Header="1" />
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Name}" Header="Acepta/Rechaza" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Grid>
+</Window>
