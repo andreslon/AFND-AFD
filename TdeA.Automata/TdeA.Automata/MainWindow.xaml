@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TdeA.Automata"
         mc:Ignorable="d"
-        Title="TdeA AFND-AFD" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="TdeA AFND-AFD" Height="450" Width="900" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <CollectionViewSource x:Key="Salidas" Source="{Binding TipoSalidas}" />
+    </Window.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -16,18 +19,18 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock  Text="Implementar un programa que permita convertir un autómata finito no determinístico (AFND) en
+        <TextBlock Margin="10"  Text="Implementar un programa que permita convertir un autómata finito no determinístico (AFND) en
 autómata finito determinístico(AFD)." Grid.Column="0" TextWrapping="Wrap"/>
-        <TextBlock  Text="1. Se le pide al usuario que introduzca el autómata finito no determinístico la aplicación debe
+        <TextBlock Margin="10" Text="1. Se le pide al usuario que introduzca el autómata finito no determinístico la aplicación debe
 validar si el autómata que el usuario ingreso es no determinístico." Grid.Column="1" TextWrapping="Wrap"/>
-        <TextBlock  Text="
+        <TextBlock Margin="10" Text="
 2. Una vez validado se debe convertir el autómata finito no determinístico en determinístico y
 luego mostrar en forma gráfica (pintarlo) el autómata finito determinístico." Grid.Column="2" TextWrapping="Wrap"/>
 
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="1" Margin="10" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/> 
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -35,17 +38,32 @@ luego mostrar en forma gráfica (pintarlo) el autómata finito determinístico."
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Cantidad de estados:" Grid.Row="0" VerticalAlignment="Center"></TextBlock>
-            <TextBox Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center"  PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1" Width="100"   VerticalAlignment="Center"  PreviewTextInput="TextBox_PreviewTextInput" Text="{Binding CantidadEstados}" IsEnabled="{Binding CantidadHabilitada}"></TextBox>
+
+            <Button Grid.Column="0" Grid.Row="1" Height="20" Width="100" Content="Crear" Command="{Binding CrearCommand}"></Button>
+            <Button Grid.Column="1" Grid.Row="1" Height="20" Width="100" Content="Limpiar" Command="{Binding LimpiarCommand}"></Button>
  
-            <DataGrid  Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Values}" AutoGenerateColumns="False"   >
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Error= E" Grid.Row="0" VerticalAlignment="Center"></TextBlock>
+            <DataGrid ColumnWidth="*" Grid.Row="1"   CanUserAddRows="False" ItemsSource="{Binding Estados, Mode=OneWay}" AutoGenerateColumns="False"  IsEnabled="{Binding TablaHabilitada}" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Name}" Header="Estado" />
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Name}" Header="0" />
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Name}" Header="1" />
-                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Name}" Header="Acepta/Rechaza" />
+                    <DataGridTextColumn Width="20" IsReadOnly="False" Binding="{Binding Path=Numero}" Header="#" />
+                    <DataGridTextColumn Width="60" IsReadOnly="False"  Binding="{Binding Path=Nombre}" Header="Estado" />
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Transicion0}" Header="0" />
+                    <DataGridTextColumn IsReadOnly="False" Binding="{Binding Path=Transicion1}" Header="1" />
+                    <DataGridComboBoxColumn Width="100" Header="Acepta/Rechaza" 
+                        ItemsSource="{Binding Source={StaticResource Salidas}}" DisplayMemberPath="Descripcion" SelectedValuePath="Id"
+                        SelectedValueBinding="{Binding Salida}" />
                 </DataGrid.Columns>
             </DataGrid>
-
+            <Button Grid.Column="1" Grid.Row="2" Height="20" Width="100" Content="Convertir" Command="{Binding ConvertirCommand}"></Button>
         </Grid>
     </Grid>
 </Window>
